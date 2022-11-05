@@ -1,17 +1,43 @@
-<script setup>
+<script>
 import Task from './Task.vue'
 
-defineProps({
-  msg: {
-    type: String,
-    required: true
+export default {
+  components: {
+    Task,
+  },
+  methods: {
+    async login() {
+      try {            
+          const response = await axios.get(
+              baseAPIURL + 'scrum/tasks/',
+              { auth: {username: this.usernameLogin, password: this.passwordLogin} } 
+          );
+          //this.tasks = response.data;
+          console.log(response.data);
+          //this.$emit('logged', true)
+      } catch (e) {
+          this.messageLogin = e.response.data;
+      }
+    }    
   }
-})
+}
 </script>
 
 <template>
-  <div class="ToDoStage">
+  <div class="stage">
     <h1 class="green">To do</h1>
+    <div class="tasks">
+      <Task />
+    </div>
+  </div>
+  <div class="stage">
+    <h1 class="green">In progress</h1>
+    <div class="tasks">
+      <Task />
+    </div>
+  </div>
+  <div class="stage">
+    <h1 class="green">Done</h1>
     <div class="tasks">
       <Task />
     </div>
@@ -19,14 +45,8 @@ defineProps({
 </template>
 
 <style scoped>
-.ToDoStage {
+.stage {
   width: 200px;
-}
-
-@media (min-width: 1024px) {
-  .greetings h1,
-  .greetings h3 {
-    text-align: left;
-  }
+  float: right;
 }
 </style>
