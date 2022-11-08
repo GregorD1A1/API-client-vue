@@ -4,9 +4,8 @@ import axios from 'axios'
 
 const baseAPIURL = "http://localhost:8000/"
 
-
 export default {
-    emits: ['logged', 'tasks'],
+    emits: ['logged', 'username', 'password'],
     data() {
         return {
             usernameLogin: "",
@@ -28,8 +27,7 @@ export default {
                     password2: this.password2Register,
                 },
                 );
-                this.message = "User " + this.usernameRegister + " created"
-                console.log("jest git");
+                this.messageRegister = "User " + this.usernameRegister + " created"
                 this.usernameRegister = ""
                 this.passwordRegister = ""
                 this.password2Register = ""
@@ -39,16 +37,16 @@ export default {
             }
               
         },
-        async getTasks() {
+        async login() {
+            // try to login, we not interested in response on that stage
             try {            
-                const response = await axios.get(
+                await axios.get(
                     baseAPIURL + 'scrum/tasks/',
                     { auth: {username: this.usernameLogin, password: this.passwordLogin} } 
                 );
-                const tasks = response.data;
-                console.log(response.data);
                 this.$emit('logged', true)
-                this.$emit('tasks', tasks)
+                this.$emit('username', this.usernameLogin)
+                this.$emit('password', this.passwordLogin)
             } catch (e) {
                 this.messageLogin = e.response.data;
             }
@@ -58,7 +56,7 @@ export default {
 </script>
 
 <template>
-    <form @submit.prevent="getTasks">
+    <form @submit.prevent="login">
         <h1>Login form</h1>
         <input type="text" placeholder="username" v-model="usernameLogin">
         <input type="password" placeholder="password" v-model="passwordLogin">
