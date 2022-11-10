@@ -12,9 +12,14 @@ export default {
   },
   data() {
     return {
+      /*
       loggedIn: false,
       username: '',
       password: '',
+      */
+      loggedIn: true,
+      username: 'slonik',
+      password: '111122aa',
     }
 
   },
@@ -26,5 +31,8 @@ export default {
   <LoginRegisterPage  v-else @logged="(loggedBool) => loggedIn = loggedBool" @username="(usrnm) => username = usrnm" @password="(passwd) => password = passwd" />
 </template>
 
-<style scoped>
+<style>
+  #app {
+    
+  }
 </style>

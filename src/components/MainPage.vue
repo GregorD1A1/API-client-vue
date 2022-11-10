@@ -1,6 +1,7 @@
 <script>
 import Task from './Task.vue'
-import TaskCreationEditionForm from './TaskCreationEditionForm.vue'
+import TaskCreationForm from './TaskCreationForm.vue'
+
 import axios from 'axios'
 
 
@@ -9,7 +10,7 @@ const baseAPIURL = "http://localhost:8000/"
 export default {
   components: {
     Task,
-    TaskCreationEditionForm,
+    TaskCreationForm,
   },
   props: {
     username: String,
@@ -18,7 +19,6 @@ export default {
   data() {
     return {
       tasks: [],
-      editedTask: {},
     }
   },
   methods: {
@@ -59,16 +59,16 @@ export default {
       <h1 class="green">To do</h1>
       <ul>
         <li v-for="task of tasksStageTD" :key="task.id">
-          <Task :task="task" :username="username" :password="password" @editedTask="(task) => editedTask = task" />
+          <Task :task="task" :username="username" :password="password" @refreshTasks="getTasks"/>
         </li>
       </ul>
-      <TaskCreationEditionForm :username="username" :password="password" :editedTask="editedTask"/>
+      <TaskCreationForm :username="username" :password="password" @refreshTasks="getTasks"/>
     </div>
     <div class="stage">
       <h1 class="green">In progress</h1>
         <ul>
           <li v-for="task of tasksStageIP" :key="task.id">
-            <Task :task="task" :username="username" :password="password" @editedTask="(task) => editedTask = task" />
+            <Task :task="task" :username="username" :password="password" @refreshTasks="getTasks"/>
           </li>
         </ul>
     </div>
@@ -76,7 +76,7 @@ export default {
       <h1 class="green">Done</h1>
         <ul>
           <li v-for="task of tasksStageDN" :key="task.id">
-            <Task :task="task" :username="username" :password="password" @editedTask="(task) => editedTask = task" />
+            <Task :task="task" :username="username" :password="password" @refreshTasks="getTasks"/>
           </li>
         </ul>
     </div>
@@ -85,11 +85,12 @@ export default {
 
 <style scoped>
 .container {
-  background-color: red;
-  width: 1500px;
+  background-color: rgb(118, 149, 150);
+  margin: 30px;
 }
 .stage {
-  width: 500px;
+  text-align: center;
+  width: 33%;
   float: left;
 }
 </style>

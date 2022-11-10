@@ -1,11 +1,12 @@
 <script>
 import axios from 'axios'
+import TaskEditionForm from './TaskEditionForm.vue'
 
 
 const baseAPIURL = "http://localhost:8000/"
 
 export default {
-  emits: ['editedTask'],
+  emits: ['refreshTasks'],
   props: {
       task: {},
       username: String,
@@ -13,7 +14,9 @@ export default {
   },
   data() {
     return {
-      priority_class: "medium_priority"
+      priority_class: "medium_priority",
+      editing: false,
+      bgColor: "#0099CC",
     }
   },
   methods: {
@@ -23,30 +26,42 @@ export default {
             baseAPIURL + 'scrum/tasks/' + this.task.id + '/',
             { auth: {username: this.username, password: this.password} } 
         );
+        this.$emit('refreshTasks')
       } catch (e) {
           console.error(e.response.data);
       }
     },
     editTask() {
-      this.$emit('editedTask', this.task);
+      this.editing = true;
     },
+  },
+  components: {
+    TaskEditionForm,
+  },
+  computed: {
+    cssVars() {
+      return {
+        '--bg-color': this.bgColor,
+      }
+    }
   },
 }
 </script>
 
 <template>
-  <div :class="priority_class">
+  <div :class="cssVars" v-if="!editing">
     <h2>{{ task.name }}</h2>
     <div>{{ task.description }}</div>
     <button @click="editTask">Edit</button>
     <button @click="deleteTask">Delete</button>
   </div>
+  <TaskEditionForm :username="username" :password="password" :editedTask="task" @refreshTasks="this.$emit('refreshTasks'); this.editing=false" v-else/>
 </template>
 
 <style scoped>
     .task_container {
         border-radius: 10px;    
-        /*shadow: 5px;*/
+        box-shadow: 5px;
         width: inherit;
         text-align: center;    
     }
@@ -54,7 +69,7 @@ export default {
       background-color: rgb(241, 239, 202);
     }
     .medium_priority {
-      background-color: rgb(210, 204, 89);
+      background-color: var(--bg-color);
     }
     .high_priority {
       background-color: rgb(180, 36, 51);
