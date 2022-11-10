@@ -44,12 +44,12 @@ export default {
         <h3>Create task:</h3>
         <input type="text" placeholder="name" v-model="name">
         <input type="text" placeholder="description" v-model="description">
-        <label for="priorities">Priority: </label>
-        <select name="priorities" v-model="priority">
+        <label for="priorities">   Priority: </label>
+        <select class="dropdown" name="priorities" v-model="priority" >
             <option value="L">Low</option>
             <option value="M">Medium</option>
             <option value="H">High</option>
         </select>
-        <input type="submit" value="Create task">
+        <input class="btn" type="submit" value="Create task">
     </form>
 </template>

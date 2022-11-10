@@ -34,12 +34,18 @@ export default {
         <h3>Edit task:</h3>
         <input type="text" placeholder="name" v-model="editedTask.name">
         <input type="text" placeholder="description" v-model="editedTask.description">
-        <label for="priorities">Priority: </label>
-        <select name="priorities" v-model="editedTask.priority">
+        <label for="priorities">   Priority: </label>
+        <select class="dropdown" name="priorities" v-model="editedTask.priority">
             <option value="L">Low</option>
             <option value="M">Medium</option>
             <option value="H">High</option>
         </select>
-        <input type="submit" value="Submit changes">
+        <label for="stages">   Stage: </label>
+        <select class="dropdown" name="stages" v-model="editedTask.stage">
+            <option value="TD">To Do</option>
+            <option value="IP">In Progress</option>
+            <option value="DN">Done</option>
+        </select>
+        <input class="btn" type="submit" value="Submit changes">
     </form>
 </template>

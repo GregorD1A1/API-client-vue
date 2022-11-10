@@ -33,6 +33,20 @@ export default {
 
 <style>
   #app {
-    
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(230, 253, 225);
+  }
+  .btn {
+      background-color: rgb(195, 224, 164);
+      border-radius: 4px;
+      padding: 6px;
+  }
+  .btn:hover {
+    background-color: rgb(130, 150, 107);
+  }
+  .dropdown {
+    background-color: rgb(195, 224, 164);
+    border-radius: 4px;
   }
 </style>

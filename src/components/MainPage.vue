@@ -56,41 +56,48 @@ export default {
 <template>
   <div class="container">
     <div class="stage">
-      <h1 class="green">To do</h1>
-      <ul>
+      <h1>To do</h1>
+      <ul class="list">
         <li v-for="task of tasksStageTD" :key="task.id">
           <Task :task="task" :username="username" :password="password" @refreshTasks="getTasks"/>
         </li>
       </ul>
-      <TaskCreationForm :username="username" :password="password" @refreshTasks="getTasks"/>
+      <TaskCreationForm class="creation_form" :username="username" :password="password" @refreshTasks="getTasks"/>
     </div>
     <div class="stage">
-      <h1 class="green">In progress</h1>
-        <ul>
+      <h1>In progress</h1>
+        <ul class="list">
           <li v-for="task of tasksStageIP" :key="task.id">
             <Task :task="task" :username="username" :password="password" @refreshTasks="getTasks"/>
           </li>
         </ul>
+        <TaskCreationForm class="creation_form" :username="username" :password="password" @refreshTasks="getTasks"/>
     </div>
     <div class="stage">
-      <h1 class="green">Done</h1>
-        <ul>
+      <h1>Done</h1>
+        <ul class="list">
           <li v-for="task of tasksStageDN" :key="task.id">
             <Task :task="task" :username="username" :password="password" @refreshTasks="getTasks"/>
           </li>
         </ul>
+        <TaskCreationForm class="creation_form" :username="username" :password="password" @refreshTasks="getTasks"/>
     </div>
   </div>
 </template>
 
 <style scoped>
 .container {
-  background-color: rgb(118, 149, 150);
   margin: 30px;
 }
 .stage {
   text-align: center;
   width: 33%;
   float: left;
+}
+.list {
+  list-style: none;
+}
+.creation_form {
+  margin-top: 25px;
 }
 </style>
