@@ -12,14 +12,14 @@ export default {
   },
   data() {
     return {
-      /*
       loggedIn: false,
       username: '',
       password: '',
-      */
+      /*
       loggedIn: true,
       username: 'slonik',
       password: '111122aa',
+      */
     }
 
   },
@@ -36,6 +36,7 @@ export default {
     width: 100vw;
     height: 100vh;
     background-color: rgb(230, 253, 225);
+    color: rgb(33, 37, 32);
   }
   .btn {
       background-color: rgb(195, 224, 164);
