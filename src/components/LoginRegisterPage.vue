@@ -2,10 +2,10 @@
 import axios from 'axios'
 
 
-const baseAPIURL = "http://localhost:8000/"
+const baseAPIURL = "https://scrumapi-device.dataplicity.io/"
 
 export default {
-    emits: ['logged', 'username', 'password'],
+    emits: ['username', 'password'],
     data() {
         return {
             usernameLogin: "",
@@ -34,6 +34,10 @@ export default {
                 this.messageLogin = ""
             } catch (e) {
                 this.messageRegister = e.response.data;
+                this.usernameRegister = ""
+                this.passwordRegister = ""
+                this.password2Register = ""
+                this.messageLogin = ""
             }
               
         },
@@ -44,11 +48,13 @@ export default {
                     baseAPIURL + 'scrum/tasks/',
                     { auth: {username: this.usernameLogin, password: this.passwordLogin} } 
                 );
-                this.$emit('logged', true)
                 this.$emit('username', this.usernameLogin)
                 this.$emit('password', this.passwordLogin)
             } catch (e) {
                 this.messageLogin = e.response.data;
+                this.usernameLogin = "";
+                this.passwordLogin = "";
+                this.messageRegister = ""
             }
         }
     }

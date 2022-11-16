@@ -3,7 +3,7 @@ import axios from 'axios'
 import TaskEditionForm from './TaskEditionForm.vue'
 
 
-const baseAPIURL = "http://localhost:8000/"
+const baseAPIURL = "https://scrumapi-device.dataplicity.io/"
 
 export default {
   emits: ['refreshTasks'],
@@ -55,7 +55,7 @@ export default {
 
 <style scoped>
     .task_container {
-      background-color: rgb(227, 250, 202);
+      background-color: rgb(247, 250, 202);
       margin: 15px;
       border-radius: 10px;    
       box-shadow: 5px 3px 3px black;

@@ -2,7 +2,7 @@
 import axios from 'axios'
 
 
-const baseAPIURL = "http://localhost:8000/"
+const baseAPIURL = "https://scrumapi-device.dataplicity.io/"
 
 export default {
     props: {
@@ -11,18 +11,25 @@ export default {
         editedTask: {},
     },
     emits: ['refreshTasks'],
+    data() {
+        return {
+            // this variable is a buffer. Without it, when trying to change task stage, it moves to other column and gives no posiibility to submit it
+            stage: '',
+        }
+    },
     methods: {
         async editTask() {
             try {            
                 const response = await axios.put(
                     baseAPIURL + 'scrum/tasks/' + this.editedTask.id + '/',
-                    {name: this.editedTask.name, description: this.editedTask.description, stage: this.editedTask.stage, priority: this.editedTask.priority},
+                    {name: this.editedTask.name, description: this.editedTask.description, stage: this.stage, priority: this.editedTask.priority},
                     { auth: {username: this.username, password: this.password} } 
                 );
                 console.log(response.data);
+                this.editedTask.stage = this.stage;
                 this.$emit('refreshTasks');
             } catch (e) {
-                console.error(e.response.data);
+                console.error(e);
             }
         },
     }
@@ -41,7 +48,7 @@ export default {
             <option value="H">High</option>
         </select>
         <label for="stages">   Stage: </label>
-        <select class="dropdown" name="stages" v-model="editedTask.stage">
+        <select class="dropdown" name="stages" v-model="stage">
             <option value="TD">To Do</option>
             <option value="IP">In Progress</option>
             <option value="DN">Done</option>

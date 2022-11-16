@@ -5,7 +5,7 @@ import TaskCreationForm from './TaskCreationForm.vue'
 import axios from 'axios'
 
 
-const baseAPIURL = "http://localhost:8000/"
+const baseAPIURL = "https://scrumapi-device.dataplicity.io/"
 
 export default {
   components: {
@@ -62,7 +62,8 @@ export default {
           <Task :task="task" :username="username" :password="password" @refreshTasks="getTasks"/>
         </li>
       </ul>
-      <TaskCreationForm class="creation_form" :username="username" :password="password" @refreshTasks="getTasks"/>
+      <!-- stage prop withoun : because it is static string --> 
+      <TaskCreationForm class="creation_form" :username="username" :password="password" stage="TD" @refreshTasks="getTasks"/>
     </div>
     <div class="stage">
       <h1>In progress</h1>
@@ -71,7 +72,7 @@ export default {
             <Task :task="task" :username="username" :password="password" @refreshTasks="getTasks"/>
           </li>
         </ul>
-        <TaskCreationForm class="creation_form" :username="username" :password="password" @refreshTasks="getTasks"/>
+        <TaskCreationForm class="creation_form" :username="username" :password="password" stage="IP" @refreshTasks="getTasks"/>
     </div>
     <div class="stage">
       <h1>Done</h1>
@@ -80,15 +81,12 @@ export default {
             <Task :task="task" :username="username" :password="password" @refreshTasks="getTasks"/>
           </li>
         </ul>
-        <TaskCreationForm class="creation_form" :username="username" :password="password" @refreshTasks="getTasks"/>
+        <TaskCreationForm class="creation_form" :username="username" :password="password" stage="DN" @refreshTasks="getTasks"/>
     </div>
   </div>
 </template>
 
 <style scoped>
-.container {
-  margin: 30px;
-}
 .stage {
   text-align: center;
   width: 33%;

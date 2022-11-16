@@ -3,8 +3,6 @@ import MainPage from './components/MainPage.vue'
 import LoginRegisterPage from './components/LoginRegisterPage.vue'
 
 
-const baseAPIURL = "http://localhost:8000/"
-
 export default {
   components: {
       LoginRegisterPage,
@@ -12,42 +10,35 @@ export default {
   },
   data() {
     return {
-      loggedIn: false,
       username: '',
       password: '',
-      /*
-      loggedIn: true,
-      username: 'slonik',
-      password: '111122aa',
-      */
     }
-
   },
 };
 </script>
 
 <template>
-  <MainPage v-if="loggedIn" :username="username" :password="password" />
-  <LoginRegisterPage  v-else @logged="(loggedBool) => loggedIn = loggedBool" @username="(usrnm) => username = usrnm" @password="(passwd) => password = passwd" />
+  <MainPage v-if="username" :username="username" :password="password" />
+  <LoginRegisterPage  v-else @username="(usrnm) => username = usrnm" @password="(passwd) => password = passwd" />
 </template>
 
 <style>
   #app {
     width: 100vw;
     height: 100vh;
-    background-color: rgb(230, 253, 225);
+    background-color: rgb(249, 253, 225);
     color: rgb(33, 37, 32);
   }
   .btn {
-      background-color: rgb(195, 224, 164);
+      background-color: rgb(232, 232, 170);
       border-radius: 4px;
       padding: 6px;
   }
   .btn:hover {
-    background-color: rgb(130, 150, 107);
+    background-color: rgb(145, 150, 107);
   }
   .dropdown {
-    background-color: rgb(195, 224, 164);
+    background-color: rgb(232, 232, 170);
     border-radius: 4px;
   }
 </style>
