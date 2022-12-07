@@ -1,20 +1,18 @@
 <script>
 import Task from './Task.vue'
 import TaskCreationForm from './TaskCreationForm.vue'
-
+import { useMainStore } from '@/stores/main'
 import axios from 'axios'
 
 
-const baseAPIURL = "https://scrumapi-device.dataplicity.io/"
-
 export default {
+  setup() {
+      const store = useMainStore()
+      return { store }
+  },
   components: {
     Task,
     TaskCreationForm,
-  },
-  props: {
-    username: String,
-    password: String,
   },
   data() {
     return {
@@ -25,8 +23,8 @@ export default {
     async getTasks() {
       try {            
         const response = await axios.get(
-            baseAPIURL + 'scrum/tasks/',
-            { auth: {username: this.username, password: this.password} } 
+            this.store.baseAPIURL + 'scrum/tasks/',
+            { auth: {username: this.store.username, password: this.store.password} } 
         );
         this.tasks = response.data;
         console.log(this.tasks);
@@ -59,29 +57,29 @@ export default {
       <h1>To do</h1>
       <ul class="list">
         <li v-for="task of tasksStageTD" :key="task.id">
-          <Task :task="task" :username="username" :password="password" @refreshTasks="getTasks"/>
+          <Task :task="task" @refreshTasks="getTasks"/>
         </li>
       </ul>
       <!-- stage prop withoun : because it is static string --> 
-      <TaskCreationForm class="creation_form" :username="username" :password="password" stage="TD" @refreshTasks="getTasks"/>
+      <TaskCreationForm class="creation_form" stage="TD" @refreshTasks="getTasks"/>
     </div>
     <div class="stage">
       <h1>In progress</h1>
         <ul class="list">
           <li v-for="task of tasksStageIP" :key="task.id">
-            <Task :task="task" :username="username" :password="password" @refreshTasks="getTasks"/>
+            <Task :task="task" @refreshTasks="getTasks"/>
           </li>
         </ul>
-        <TaskCreationForm class="creation_form" :username="username" :password="password" stage="IP" @refreshTasks="getTasks"/>
+        <TaskCreationForm class="creation_form" stage="IP" @refreshTasks="getTasks"/>
     </div>
     <div class="stage">
       <h1>Done</h1>
         <ul class="list">
           <li v-for="task of tasksStageDN" :key="task.id">
-            <Task :task="task" :username="username" :password="password" @refreshTasks="getTasks"/>
+            <Task :task="task" @refreshTasks="getTasks"/>
           </li>
         </ul>
-        <TaskCreationForm class="creation_form" :username="username" :password="password" stage="DN" @refreshTasks="getTasks"/>
+        <TaskCreationForm class="creation_form" stage="DN" @refreshTasks="getTasks"/>
     </div>
   </div>
 </template>

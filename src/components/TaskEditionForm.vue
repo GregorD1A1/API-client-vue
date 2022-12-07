@@ -1,29 +1,31 @@
 <script>
 import axios from 'axios'
+import { useMainStore } from '@/stores/main'
 
-
-const baseAPIURL = "https://scrumapi-device.dataplicity.io/"
 
 export default {
+    setup() {
+        const store = useMainStore()
+        return { store }
+    },
     props: {
-        username: String,
-        password: String,
         editedTask: {},
     },
     emits: ['refreshTasks'],
     data() {
         return {
             // this variable is a buffer. Without it, when trying to change task stage, it moves to other column and gives no posiibility to submit it
-            stage: '',
+            stage: this.editedTask.stage,
         }
     },
     methods: {
         async editTask() {
+            console.log(this.editedTask.name)
             try {            
                 const response = await axios.put(
-                    baseAPIURL + 'scrum/tasks/' + this.editedTask.id + '/',
+                    this.store.baseAPIURL + 'scrum/tasks/' + this.editedTask.id + '/',
                     {name: this.editedTask.name, description: this.editedTask.description, stage: this.stage, priority: this.editedTask.priority},
-                    { auth: {username: this.username, password: this.password} } 
+                    { auth: {username: this.store.username, password: this.store.password} } 
                 );
                 console.log(response.data);
                 this.editedTask.stage = this.stage;

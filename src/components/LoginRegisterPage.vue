@@ -1,10 +1,13 @@
 <script>
 import axios from 'axios'
+import { useMainStore } from '@/stores/main'
 
-
-const baseAPIURL = "https://scrumapi-device.dataplicity.io/"
 
 export default {
+    setup() {
+        const store = useMainStore()
+        return { store }
+    },
     emits: ['username', 'password'],
     data() {
         return {
@@ -20,7 +23,7 @@ export default {
     methods: {
         async register() {
             try {            
-                const response = await axios.post(baseAPIURL + 'auth/register/', 
+                const response = await axios.post(this.store.baseAPIURL + 'auth/register/', 
                 {
                     username: this.usernameRegister, 
                     password: this.passwordRegister, 
@@ -39,22 +42,23 @@ export default {
                 this.password2Register = ""
                 this.messageLogin = ""
             }
-              
         },
         async login() {
             // try to login, we not interested in response on that stage
             try {            
                 await axios.get(
-                    baseAPIURL + 'scrum/tasks/',
+                    this.store.baseAPIURL + 'scrum/tasks/',
                     { auth: {username: this.usernameLogin, password: this.passwordLogin} } 
                 );
+                this.store.username = this.usernameLogin
+                this.store.password = this.passwordLogin
                 this.$emit('username', this.usernameLogin)
                 this.$emit('password', this.passwordLogin)
             } catch (e) {
                 this.messageLogin = e.response.data;
                 this.usernameLogin = "";
                 this.passwordLogin = "";
-                this.messageRegister = ""
+                this.messageRegister = "";
             }
         }
     }

@@ -1,16 +1,17 @@
 <script>
 import axios from 'axios'
 import TaskEditionForm from './TaskEditionForm.vue'
+import { useMainStore } from '@/stores/main'
 
-
-const baseAPIURL = "https://scrumapi-device.dataplicity.io/"
 
 export default {
+  setup() {
+      const store = useMainStore()
+      return { store }
+  },
   emits: ['refreshTasks'],
   props: {
       task: {},
-      username: String,
-      password: String,
   },
   data() {
     return {
@@ -22,8 +23,8 @@ export default {
     async deleteTask() {
       try {            
         await axios.delete(
-            baseAPIURL + 'scrum/tasks/' + this.task.id + '/',
-            { auth: {username: this.username, password: this.password} } 
+            this.store.baseAPIURL + 'scrum/tasks/' + this.task.id + '/',
+            { auth: {username: this.store.username, password: this.store.password} } 
         );
         this.$emit('refreshTasks')
       } catch (e) {
@@ -50,7 +51,7 @@ export default {
     </div>
     <div class="priority_strip" :style="{'background-color': task.priority=='L' ? '#5CD470' : task.priority=='M' ? '#5CBED4' : '#D45C6A'}"></div>
   </div>
-  <TaskEditionForm :username="username" :password="password" :editedTask="task" @refreshTasks="this.$emit('refreshTasks'); this.editing=false" v-else/>
+  <TaskEditionForm :editedTask="task" @refreshTasks="this.$emit('refreshTasks'); this.editing=false" v-else/>
 </template>
 
 <style scoped>

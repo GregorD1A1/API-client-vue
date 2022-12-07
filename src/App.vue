@@ -1,25 +1,26 @@
 <script>
 import MainPage from './components/MainPage.vue'
 import LoginRegisterPage from './components/LoginRegisterPage.vue'
+import { useMainStore } from '@/stores/main'
 
 
 export default {
+  setup() {
+    const store = useMainStore()
+    return {
+      store,
+    }
+  },
   components: {
       LoginRegisterPage,
       MainPage,
-  },
-  data() {
-    return {
-      username: '',
-      password: '',
-    }
   },
 };
 </script>
 
 <template>
-  <MainPage v-if="username" :username="username" :password="password" />
-  <LoginRegisterPage  v-else @username="(usrnm) => username = usrnm" @password="(passwd) => password = passwd" />
+  <MainPage v-if="this.store.username" />
+  <LoginRegisterPage  v-else/>
 </template>
 
 <style>

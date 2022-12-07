@@ -1,10 +1,13 @@
 <script>
 import axios from 'axios'
+import { useMainStore } from '@/stores/main'
 
-
-const baseAPIURL = "https://scrumapi-device.dataplicity.io/"
 
 export default {
+    setup() {
+        const store = useMainStore()
+        return { store }
+    },
     data() {
         return {
             name: '',
@@ -13,8 +16,6 @@ export default {
         }
     },
     props: {
-        username: String,
-        password: String,
         stage: String,
     },
     emits: ['refreshTasks'],
@@ -22,9 +23,9 @@ export default {
         async addTask() {
             try {        
                 const response = await axios.post(
-                    baseAPIURL + 'scrum/tasks/',
+                    this.store.baseAPIURL + 'scrum/tasks/',
                     {name: this.name, description: this.description, stage: this.stage, priority: this.priority},
-                    { auth: {username: this.username, password: this.password} } 
+                    { auth: {username: this.store.username, password: this.store.password} } 
                 );
                 console.log(response.data);
                 this.$emit('refreshTasks');
