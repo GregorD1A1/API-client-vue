@@ -1,29 +1,7 @@
-# scrum_client
+A frontend based on VueJS for a task management platform similar to Jira, developed specifically for a video tutorial. Please find the link to the video tutorials below:
 
-This template should help get you started developing with Vue 3 in Vite.
+Part 1:
+https://www.youtube.com/watch?v=rQadY8-CRQc&t
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
+Part 2:
+https://www.youtube.com/watch?v=jF_THWEJNLU
